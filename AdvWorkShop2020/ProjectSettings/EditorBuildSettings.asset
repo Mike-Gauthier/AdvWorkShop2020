@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Zachary/Title Screen.unity
+    guid: bff7813c7ac9c0e439b9fd91623af993
+  - enabled: 1
+    path: Assets/Scenes/Zachary/Instructions.unity
+    guid: 111c009aebe122c41bbd9a9d09300c34
+  - enabled: 1
+    path: Assets/Scenes/Zachary/UI Elements.unity
+    guid: c67691015c17b9540a4a901691fcb9ac
   m_configObjects: {}
