@@ -5,10 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - wood
-  - stone
   - mud
-  - Seeker
-  - Target
+  - stone
   layers:
   - Default
   - TransparentFX
@@ -18,7 +16,7 @@ TagManager:
   - UI
   - 
   - 
-  - Unwalkable
+  - 
   - 
   - 
   - 
