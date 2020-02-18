@@ -3104,7 +3104,7 @@ MonoBehaviour:
   - terrainMask:
       serializedVersion: 2
       m_Bits: 1024
-    terrainPenalty: 1000
+    terrainPenalty: 50
 --- !u!4 &1038809663
 Transform:
   m_ObjectHideFlags: 0
