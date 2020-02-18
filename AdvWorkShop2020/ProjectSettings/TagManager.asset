@@ -7,6 +7,8 @@ TagManager:
   - wood
   - mud
   - stone
+  - Seeker
+  - Target
   layers:
   - Default
   - TransparentFX
@@ -16,9 +18,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Unwalkable
+  - Road
+  - Grass
   - 
   - 
   - 
