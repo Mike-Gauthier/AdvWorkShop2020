@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,10 +13,16 @@ public class PlayerController : MonoBehaviour
     public float woodCount;
     public float stoneCount;
     public float mudCount;
+    public GameObject swingHitbox;
+    public bool swingOnCD;
+    public TextMeshProUGUI woodNumber;
+    public TextMeshProUGUI stoneNumber;
+    public TextMeshProUGUI mudNumber;
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        swingOnCD = false;
     }
     void Update()
     {
@@ -30,6 +37,10 @@ public class PlayerController : MonoBehaviour
         }
         direction.y -= gravity * Time.deltaTime;
 
+        if (Input.GetKeyDown(KeyCode.Mouse0) && swingOnCD == false) // swing method
+        {
+            StartCoroutine(ClickSwing());
+        }
     }
 
     private void FixedUpdate()
@@ -54,6 +65,16 @@ public class PlayerController : MonoBehaviour
             mudCount++;
             Destroy(other.gameObject);
         }
+    }
+
+    IEnumerator ClickSwing()
+    {
+        swingOnCD = true;
+        swingHitbox.SetActive(true);
+        yield return new WaitForSeconds(.05f); // time the swing hitbox is active
+        swingHitbox.SetActive(false);
+        yield return new WaitForSeconds(.5f); // cooldown between swings
+        swingOnCD = false;
     }
 
 }

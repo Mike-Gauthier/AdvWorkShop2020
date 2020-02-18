@@ -4,11 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - strike
   - wood
-  - mud
   - stone
   - Seeker
   - Target
+  - mud
   layers:
   - Default
   - TransparentFX
@@ -18,9 +19,9 @@ TagManager:
   - UI
   - 
   - 
-  - Unwalkable
-  - Road
-  - Grass
+  - 
+  - 
+  - 
   - 
   - 
   - 
