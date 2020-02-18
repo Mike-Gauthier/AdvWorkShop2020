@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     private float mouseWheelRotation;
     private int currentPrefabIndex = -1;
     public PlayerController pScript;
+    public GameObject holder;
 
     void Start()
     {
@@ -97,6 +98,7 @@ public class GameController : MonoBehaviour
                     if (i == 0 && pScript.woodCount >= 50 && pScript.stoneCount >= 50 && pScript.mudCount >= 50)
                     {
                         currentPlaceable = Instantiate(placeablePrefabs[i]);
+                        currentPlaceable.transform.parent = holder.transform; //parenting
                         currentPrefabIndex = i;
                         pScript.woodCount = pScript.woodCount - 50;
                         pScript.stoneCount = pScript.stoneCount - 50;
@@ -106,6 +108,7 @@ public class GameController : MonoBehaviour
                     if (i == 1 && pScript.woodCount >= 100 && pScript.stoneCount >= 100 && pScript.mudCount >= 100)
                     {
                         currentPlaceable = Instantiate(placeablePrefabs[i]);
+                        currentPlaceable.transform.parent = holder.transform; //parenting
                         currentPrefabIndex = i;
                         pScript.woodCount = pScript.woodCount - 100;
                         pScript.stoneCount = pScript.stoneCount - 100;
@@ -115,6 +118,7 @@ public class GameController : MonoBehaviour
                     if (i == 2 && pScript.woodCount >= 200 && pScript.stoneCount >= 200 && pScript.mudCount >= 200)
                     {
                         currentPlaceable = Instantiate(placeablePrefabs[i]);
+                        currentPlaceable.transform.parent = holder.transform; //parenting
                         currentPrefabIndex = i;
                         pScript.woodCount = pScript.woodCount - 200;
                         pScript.stoneCount = pScript.stoneCount - 200;

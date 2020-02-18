@@ -7,6 +7,9 @@ TagManager:
   - wood
   - stone
   - mud
+  - sample
+  - strike
+  - test
   layers:
   - Default
   - TransparentFX
