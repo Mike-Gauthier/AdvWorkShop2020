@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public float mudCount;
     public GameObject swingHitbox;
     public bool swingOnCD;
+    public TextMeshProUGUI woodNumber;
+    public TextMeshProUGUI stoneNumber;
+    public TextMeshProUGUI mudNumber;
 
     private void Start()
     {
