@@ -4,18 +4,35 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health;
 
-
-    private void Update()
+    //finite state machine
+    enum EnemyStates
     {
+        March,
+        Approach,
+        Attack,
+        Die
+    }
+
+    private void Start()
+    {
+        //FSMUpdate();
+    }
+
+
+    //private void Update()
+    //{
         //check for player position using magnitude
         //while player.magnitude 
         //SpotPlayer
-    }
+    //}
 
-    void SpotPlayer()
+    /*void FSMUpdate()
     {
-        //
-    }
+        EnemyStates currentState;
+        currentState = EnemyStates.March;
+        
+        switch(currentState) 
+        case 
+    }*/
 }
