@@ -11,8 +11,9 @@ public class RockScript : MonoBehaviour
     private bool noLongerFull = false;
     private bool noLongerHalf = false;
     private bool noLongerLast =false;
-    public GameObject stone;
     public GameObject holder;
+
+    public GameObject[] rockVariants;
 
     void Start()
     {
@@ -45,7 +46,7 @@ public class RockScript : MonoBehaviour
         if (other.tag == "strike")
         {
             counter++;
-            GameObject a = Instantiate(stone) as GameObject;
+            GameObject a = Instantiate(rockVariants[Random.Range(0,2)]) as GameObject;
             a.transform.position = (this.transform.position + new Vector3(0.0f, 3.0f, 0.0f));
             a.transform.parent = holder.transform;
             a.GetComponent<Rigidbody>().AddForce(Random.Range(-250 ,250), 50, Random.Range(-250 , 250));
