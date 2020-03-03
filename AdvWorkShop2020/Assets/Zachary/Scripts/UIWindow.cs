@@ -16,12 +16,12 @@ public class UIWindow : MonoBehaviour
     public bool dragging;
     bool attachedToNewPoint;
 
-    Rigidbody rb;
+    Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -69,12 +69,18 @@ public class UIWindow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.tag == "Cursor Tracker")
+        {
+            canDrag = true;
+        }
     }
 
-    private void OnMouseOver() // Void name from proandrius. URL: https://forum.unity.com/threads/how-to-make-object-detect-mouse-is-over-it.223741/#post-1491314
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        canDrag = true;
+        if (!dragging && collision.gameObject.tag == "Cursor Tracker")
+        {
+            canDrag = false;
+        }
     }
 }
 
