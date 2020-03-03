@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TowerAI : MonoBehaviour
 {
+    public Transform target;
     public float towerSight;
     //Enemy enemyHealth;
     //public int shotValue;
@@ -30,13 +31,10 @@ public class TowerAI : MonoBehaviour
         }
 
     }
-    void AttackEnemy()
+    private void OnDrawGizmosSelected()
     {
-        //shoot enemy
-        //deincrement health
-        //kill if health at zero
-
-        //instantiate shot at enemy position
-        //enemyHealth -= shotValue;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, towerSight);
     }
+
 }

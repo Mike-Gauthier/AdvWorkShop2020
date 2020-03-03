@@ -2482,6 +2482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701a984f2f198c942a0f9790644d1eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   towerSight: 100
 --- !u!65 &928771899
 BoxCollider:
@@ -4491,6 +4492,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5353666025136835193, guid: b43a068cf36278544b0b4e5749016d65,
+        type: 3}
+      propertyPath: m_Name
+      value: Target
+      objectReference: {fileID: 0}
     - target: {fileID: 5353666025136835197, guid: b43a068cf36278544b0b4e5749016d65,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4545,11 +4551,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5353666025136835193, guid: b43a068cf36278544b0b4e5749016d65,
-        type: 3}
-      propertyPath: m_Name
-      value: Target
       objectReference: {fileID: 0}
     - target: {fileID: 5353666025136835192, guid: b43a068cf36278544b0b4e5749016d65,
         type: 3}
