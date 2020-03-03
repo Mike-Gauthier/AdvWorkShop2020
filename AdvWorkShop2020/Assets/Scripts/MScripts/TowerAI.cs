@@ -6,9 +6,15 @@ public class TowerAI : MonoBehaviour
 {
     public Transform target;
     public float towerSight;
-    public string enemyTag = "enemy";
+    public string enemyTag = "Enemy";
     //Enemy enemyHealth;
     //public int shotValue;
+
+    public float fireRate = 1f;
+    private float fireCD = 0f;
+
+    public GameObject shotPrefab;
+    public Transform shotSpot;
 
     private void Start()
     {
@@ -46,11 +52,29 @@ public class TowerAI : MonoBehaviour
     {
         if (target == null)
             return;
+
+        if (fireCD <= 0f)
+        {
+            Shoot();
+            fireCD = 1f / fireRate;
+        }
+        fireCD -= Time.deltaTime;
     }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, towerSight);
+    }
+
+    void Shoot()
+    {
+        GameObject shooter = (GameObject)Instantiate(shotPrefab, shotSpot.position, shotSpot.rotation);
+        ShotScript shot = shooter.GetComponent<ShotScript>();
+
+        if (shot != null)
+            shot.Targeter(target);
+
+        Debug.Log("Shoot");
     }
 
 }

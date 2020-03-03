@@ -10,6 +10,7 @@ TagManager:
   - Seeker
   - Target
   - mud
+  - Enemy
   layers:
   - Default
   - TransparentFX
