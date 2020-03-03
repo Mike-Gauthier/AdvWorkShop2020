@@ -28,11 +28,12 @@ public class WaveSpawner : MonoBehaviour
         {
             SpawnEnemy();
         }
-        waveNum++;
+        //waveNum++;
     }
 
     void SpawnEnemy()
     {
+        Debug.Log("Enemy Spawned");
         Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
     }
 }

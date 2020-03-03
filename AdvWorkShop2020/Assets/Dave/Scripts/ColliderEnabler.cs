@@ -6,13 +6,13 @@ public class ColliderEnabler : MonoBehaviour
 {
     void Start()
     {
-        this.GetComponent<SphereCollider>().enabled = false;
+        this.GetComponent<BoxCollider>().enabled = false;
         StartCoroutine(Enable());
     }
 
     IEnumerator Enable()
     {
         yield return new WaitForSeconds(.2f);
-        this.GetComponent<SphereCollider>().enabled = true;
+        this.GetComponent<BoxCollider>().enabled = true;
     }
 }
