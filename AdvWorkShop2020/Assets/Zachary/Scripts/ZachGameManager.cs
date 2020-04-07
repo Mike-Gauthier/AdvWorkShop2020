@@ -1,10 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ZachGameManager : MonoBehaviour
 {
+    public bool testBuild;
+
     bool paused;
+
+    bool gameOver;
+
+    bool expandBlackBackground;
+    public GameObject blackBackground;
+    public float blackBackgroundSize = 1.0f;
+    [Range (10.0f, 100.0f)]
+    public float blackBackgroundSizeLimit;
+    public float blackBackgroundExpandRate;
+
+    public Text gameOverText;
+    bool gameOverTextAppearing;
+    public float gameOverTextAppearRate;
+    float gameOverTextAlpha = 0.0f;
+
+    public Image gameOverImage;
+    bool gameOverImageAppearing;
+    public float gameOverImageAppearRate;
+    float gameOverImageAlpha = 0.0f;
+
+    public GameObject gameOverButtons;
 
     public GameObject pauseUI;
 
@@ -34,6 +58,15 @@ public class ZachGameManager : MonoBehaviour
         {
             activeTowerUI.SetActive(false);
         }
+
+        if (blackBackgroundExpandRate <= 0.0f)
+        {
+            blackBackgroundExpandRate = 0.1f;
+        }
+
+        UpdateGameOverImageAlpha();
+        UpdateGameOverTextAlpha();
+        gameOverButtons.SetActive(false);
     }
 
     // Update is called once per frame
@@ -58,18 +91,92 @@ public class ZachGameManager : MonoBehaviour
         {
             SetPause();
         }
+
+        if (Input.GetKeyDown(KeyCode.Delete) && testBuild)
+        {
+            LossCondition();
+        }
+
+        if (gameOver)
+        {
+            if (paused)
+            {
+                paused = false;
+            }
+
+            blackBackground.SetActive(true);
+            gameOverText.gameObject.SetActive(true);
+
+            if (expandBlackBackground)
+            {
+                blackBackgroundSize += (blackBackgroundExpandRate * Time.deltaTime);
+                blackBackground.transform.localScale = new Vector3(transform.localScale.x * blackBackgroundSize, transform.localScale.y * blackBackgroundSize, 1.0f);
+
+                if (blackBackgroundSize >= blackBackgroundSizeLimit)
+                {
+                    blackBackgroundSize = blackBackgroundSizeLimit;
+                    gameOverTextAppearing = true;
+                    expandBlackBackground = false;
+                }
+            }
+
+            if (gameOverTextAppearing)
+            {
+                gameOverTextAlpha += (gameOverTextAppearRate * Time.deltaTime);
+                UpdateGameOverTextAlpha();
+
+                if (gameOverTextAlpha >= 1.0f)
+                {
+                    gameOverTextAlpha = 1.0f;
+                    gameOverImageAppearing = true;
+                    gameOverTextAppearing = false;
+                }
+            }
+
+            if (gameOverImageAppearing)
+            {
+                gameOverImageAlpha += (gameOverImageAppearRate * Time.deltaTime);
+                UpdateGameOverImageAlpha();
+
+                if (gameOverImageAlpha >= 1.0f)
+                {
+                    gameOverImageAlpha = 1.0f;
+                    gameOverButtons.SetActive(true);
+                    gameOverImageAppearing = false;
+                }
+            }
+
+            if (Input.anyKey)
+            {
+                if (gameOverImageAppearing || gameOverTextAppearing)
+                {
+                    gameOverTextAppearRate = 50.0f;
+                    gameOverImageAppearRate = 50.0f;
+                }
+            }
+
+        }
+        else
+        {
+            blackBackground.SetActive(false);
+            gameOverText.gameObject.SetActive(false);
+        }
     }
 
     public void SetPause()
     {
-        if (!paused)
+        if (!gameOver)
         {
-            paused = true;
+            if (!paused)
+            {
+                paused = true;
+            }
+            else
+            {
+                paused = false;
+            }
         }
-        else
-        {
-            paused = false;
-        }
+
     }
 
     public void CloseUIWindow(GameObject objectToClose)
@@ -140,5 +247,24 @@ public class ZachGameManager : MonoBehaviour
         {
             Cursor.visible = true;
         }
+    }
+
+    public void LossCondition()
+    {
+        if (!gameOver)
+        {
+            gameOver = true;
+            expandBlackBackground = true;
+        }
+    }
+
+    void UpdateGameOverTextAlpha()
+    {
+        gameOverText.color = new Vector4(gameOverText.color.r, gameOverText.color.g, gameOverText.color.b, gameOverTextAlpha);
+    }
+
+    void UpdateGameOverImageAlpha()
+    {
+        gameOverImage.color = new Vector4(gameOverImage.color.r, gameOverImage.color.g, gameOverImage.color.b, gameOverImageAlpha);
     }
 }
