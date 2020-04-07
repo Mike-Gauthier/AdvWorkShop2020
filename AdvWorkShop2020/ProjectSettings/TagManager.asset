@@ -4,6 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - strike
   - wood
   - stone
@@ -16,6 +17,14 @@ TagManager:
   - bridge
   - death
   - Enemy
+=======
+  - Cursor Tracker
+  - Canvas
+  - Window Destination
+  - Tower Type 1
+  - Tower Type 2
+  - Tower Type 3
+>>>>>>> Zachary's-Branch
   layers:
   - Default
   - TransparentFX
