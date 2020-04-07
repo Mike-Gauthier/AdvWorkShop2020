@@ -10,6 +10,11 @@ TagManager:
   - Seeker
   - Target
   - mud
+  - brick
+  - oven
+  - chest
+  - bridge
+  - death
   - Enemy
   layers:
   - Default

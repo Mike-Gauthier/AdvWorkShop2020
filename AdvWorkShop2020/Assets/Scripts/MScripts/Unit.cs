@@ -8,11 +8,15 @@ public class Unit : MonoBehaviour
     public float speed;
     Vector3[] path;
     int targetIndex;
+    public float y;
 
     private void Start()
     {
         PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+        y = transform.rotation.y;
+        y = 0;
     }
+
 
     public void OnPathFound(Vector3[] newPath, bool isPathSuccesful)
     {
@@ -40,6 +44,9 @@ public class Unit : MonoBehaviour
                 currentWaypoint = path[targetIndex];
             }
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+            
+            transform.rotation = Quaternion.LookRotation(currentWaypoint);
+            
             yield return null;
         }
     }

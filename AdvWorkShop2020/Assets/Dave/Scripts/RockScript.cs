@@ -12,6 +12,8 @@ public class RockScript : MonoBehaviour
     private bool noLongerHalf = false;
     private bool noLongerLast =false;
     public GameObject holder;
+    public GameObject stoneParticle;
+    public GameObject smokeParticle;
 
     public GameObject[] rockVariants;
 
@@ -36,6 +38,7 @@ public class RockScript : MonoBehaviour
 
         if (counter == 6 && noLongerLast == false)
         {
+            Instantiate(smokeParticle, this.transform.position, Quaternion.identity);
             noLongerLast = true;
             Destroy(this.gameObject);
         }
@@ -53,6 +56,7 @@ public class RockScript : MonoBehaviour
             Debug.Log("collision detected");
             //drop stone resource
             //particle effect
+            Instantiate(stoneParticle, this.transform.position, Quaternion.identity);
             //sound effect
         }
     }

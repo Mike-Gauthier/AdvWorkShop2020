@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     private int currentPrefabIndex = -1;
     public PlayerController pScript;
     public GameObject holder;
+    public BaseBehavior bScript;
 
     void Start()
     {
@@ -20,8 +21,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        PlacementStart();
-
+        PlacementStart(); 
         if (currentPlaceable != null)
         {
             currentMove();
@@ -34,6 +34,22 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
+            if (currentPlaceable.tag == "wood")
+            {
+                bScript.baseWoodCount = bScript.baseWoodCount - 15;
+            }
+            if (currentPlaceable.tag == "stone")
+            {
+                bScript.baseWoodCount = bScript.baseWoodCount - 10;
+                bScript.baseStoneCount = bScript.baseStoneCount - 20;
+            }
+            if (currentPlaceable.tag == "mud")
+            {
+                bScript.baseWoodCount = bScript.baseWoodCount - 20;
+                bScript.baseStoneCount = bScript.baseStoneCount - 20;
+                bScript.baseBricksCount = bScript.baseBricksCount - 20;
+            }
+
             currentPlaceable = null;
         }
     }
@@ -66,27 +82,24 @@ public class GameController : MonoBehaviour
                 {
                     Destroy(currentPlaceable);
                     currentPrefabIndex = -1;
-                    if (i == 0)
-                    {
-                        pScript.woodCount = pScript.woodCount + 50;
-                        pScript.stoneCount = pScript.stoneCount + 50;
-                        pScript.mudCount = pScript.mudCount + 50;
-                        Debug.Log("Wood tower materials refunded.");
-                    }
-                    if (i == 1)
-                    {
-                        pScript.woodCount = pScript.woodCount + 100;
-                        pScript.stoneCount = pScript.stoneCount + 100;
-                        pScript.mudCount = pScript.mudCount + 100;
-                        Debug.Log("Stone tower materials refunded.");
-                    }
-                    if (i == 2)
-                    {
-                        pScript.woodCount = pScript.woodCount + 200;
-                        pScript.stoneCount = pScript.stoneCount + 200;
-                        pScript.mudCount = pScript.mudCount + 200;
-                        Debug.Log("Mud tower materials refunded.");
-                    }
+                    //if (i == 0)
+                    //{
+                    //    pScript.woodCount = pScript.woodCount + 250;
+                    //    Debug.Log("Wood tower materials refunded.");
+                    //}
+                    //if (i == 1)
+                    //{
+                    //    pScript.woodCount = pScript.woodCount + 100;
+                    //    pScript.stoneCount = pScript.stoneCount + 500;
+                    //    Debug.Log("Stone tower materials refunded.");
+                    //}
+                    //if (i == 2)
+                    //{
+                    //    pScript.woodCount = pScript.woodCount + 500;
+                    //    pScript.stoneCount = pScript.stoneCount + 500;
+                    //    pScript.mudCount = pScript.mudCount + 500;
+                    //    Debug.Log("Mud tower materials refunded.");
+                    //}
                 }
                 else
                 {
@@ -95,34 +108,31 @@ public class GameController : MonoBehaviour
                         Destroy(currentPlaceable);
                     }
 
-                    if (i == 0 && pScript.woodCount >= 50 && pScript.stoneCount >= 50 && pScript.mudCount >= 50)
+                    if (i == 0 && bScript.baseWoodCount >= 15)
                     {
                         currentPlaceable = Instantiate(placeablePrefabs[i]);
                         currentPlaceable.transform.parent = holder.transform; //parenting
                         currentPrefabIndex = i;
-                        pScript.woodCount = pScript.woodCount - 50;
-                        pScript.stoneCount = pScript.stoneCount - 50;
-                        pScript.mudCount = pScript.mudCount - 50;
+                        //pScript.woodCount = pScript.woodCount - 250;
                         Debug.Log("Wood tower placed. Counts -50");
                     }
-                    if (i == 1 && pScript.woodCount >= 100 && pScript.stoneCount >= 100 && pScript.mudCount >= 100)
+                    if (i == 1 && bScript.baseWoodCount >= 10 && bScript.baseStoneCount >= 20)
                     {
                         currentPlaceable = Instantiate(placeablePrefabs[i]);
                         currentPlaceable.transform.parent = holder.transform; //parenting
                         currentPrefabIndex = i;
-                        pScript.woodCount = pScript.woodCount - 100;
-                        pScript.stoneCount = pScript.stoneCount - 100;
-                        pScript.mudCount = pScript.mudCount - 100;
+                        //pScript.woodCount = pScript.woodCount - 100;
+                        //pScript.stoneCount = pScript.stoneCount - 500;
                         Debug.Log("Stone tower placed. Counts - 100");
                     }
-                    if (i == 2 && pScript.woodCount >= 200 && pScript.stoneCount >= 200 && pScript.mudCount >= 200)
+                    if (i == 2 && bScript.baseWoodCount >= 20 && bScript.baseStoneCount >= 20 && bScript.baseMudCount >= 20)
                     {
                         currentPlaceable = Instantiate(placeablePrefabs[i]);
                         currentPlaceable.transform.parent = holder.transform; //parenting
                         currentPrefabIndex = i;
-                        pScript.woodCount = pScript.woodCount - 200;
-                        pScript.stoneCount = pScript.stoneCount - 200;
-                        pScript.mudCount = pScript.mudCount - 200;
+                        //pScript.woodCount = pScript.woodCount - 500;
+                        //pScript.stoneCount = pScript.stoneCount - 500;
+                        //pScript.mudCount = pScript.mudCount - 500;
                         Debug.Log("Mud tower placed. Counts -200");
                     }
                     else

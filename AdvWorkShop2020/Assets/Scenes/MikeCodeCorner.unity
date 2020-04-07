@@ -2229,6 +2229,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock Node
       objectReference: {fileID: 0}
+    - target: {fileID: 1077392961825915278, guid: 41fa238b3498eb6458842beada403883,
+        type: 3}
+      propertyPath: holder
+      value: 
+      objectReference: {fileID: 1673780148}
     - target: {fileID: 3235685524483548658, guid: 41fa238b3498eb6458842beada403883,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2284,11 +2289,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1077392961825915278, guid: 41fa238b3498eb6458842beada403883,
-        type: 3}
-      propertyPath: holder
-      value: 
-      objectReference: {fileID: 1673780148}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41fa238b3498eb6458842beada403883, type: 3}
 --- !u!1 &780241139
@@ -2670,8 +2670,9 @@ MonoBehaviour:
   towerSight: 20
   enemyTag: Enemy
   fireRate: 1
-  shotPrefab: {fileID: 0}
-  shotSpot: {fileID: 0}
+  shotPrefab: {fileID: 4650969651094372636, guid: 656df4e24b4afa243993d79624a8c649,
+    type: 3}
+  shotSpot: {fileID: 928771902}
 --- !u!65 &928771899
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2738,7 +2739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928771897}
   m_LocalRotation: {x: -0, y: -0.36879817, z: -0, w: 0.9295095}
-  m_LocalPosition: {x: 1.6349385, y: 0.7894583, z: -1.5845065}
+  m_LocalPosition: {x: 2.18, y: 10.6, z: -1.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1573943820}
@@ -2917,6 +2918,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1867745046}
   speed: 5
+  y: 0
 --- !u!136 &972700858
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3093,6 +3095,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1867745046}
   speed: 5
+  y: 0
 --- !u!136 &979956278
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4253,6 +4256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1867745046}
   speed: 25
+  y: 0
 --- !u!136 &1805361855
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4390,6 +4394,7 @@ MonoBehaviour:
   - {fileID: -927199367670048503, guid: 5efe09d774319de4485ab2ebb89b0b29, type: 3}
   pScript: {fileID: 720238740}
   holder: {fileID: 1329506306}
+  bScript: {fileID: 0}
 --- !u!4 &1838626876
 Transform:
   m_ObjectHideFlags: 0
@@ -4528,9 +4533,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad126cfc646300d44ad44a58ddfa0538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 2105583530}
+  spawnPoint:
+  - {fileID: 2105583530}
+  - {fileID: 301892285}
+  - {fileID: 20345506}
   waveWait: 10
+  newWait: 5
   countDown: 10
+  howMany: 0
   enemy: {fileID: 1716872097133070992, guid: 511268427f6e3d84d9d7f4398d0d9584, type: 3}
 --- !u!4 &1884909985
 Transform:
