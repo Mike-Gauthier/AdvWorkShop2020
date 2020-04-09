@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class ZachGameManager : MonoBehaviour
 {
-    public bool testBuild;
+    bool debugMode;
 
     bool paused;
+    bool pauseUpdated;
 
     bool gameOver;
 
@@ -18,6 +19,7 @@ public class ZachGameManager : MonoBehaviour
     public float blackBackgroundSizeLimit;
     public float blackBackgroundExpandRate;
 
+    public GameObject gameOverElements;
     public Text gameOverText;
     bool gameOverTextAppearing;
     public float gameOverTextAppearRate;
@@ -36,6 +38,8 @@ public class ZachGameManager : MonoBehaviour
 
     public Vector3 cursorLocation;
 
+    public bool isTowerUIImplemented;
+
     public GameObject activeTowerUI;
     public GameObject newTowerUI;
 
@@ -43,15 +47,23 @@ public class ZachGameManager : MonoBehaviour
 
     public GameObject objectToClose;
 
+    public CameraController cameraController;
+    public GameController gameController;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameController = GetComponent<GameController>();
+
         paused = false;
         mouseTracker.position = Input.mousePosition;
 
-        if (isActiveTowerUICurrent && newTowerUI.activeInHierarchy)
+        if (isTowerUIImplemented)
         {
-            newTowerUI.SetActive(false);
+            if (isActiveTowerUICurrent && newTowerUI.activeInHierarchy)
+            {
+                newTowerUI.SetActive(false);
+            }
         }
 
         if (!isActiveTowerUICurrent && activeTowerUI.activeInHierarchy)
@@ -72,6 +84,16 @@ public class ZachGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (cameraController == null)
+        {
+            GameObject currentCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            cameraController = currentCamera.GetComponent<CameraController>();
+            if (cameraController == null)
+            {
+                Debug.Log("Error: Script 'CameraController cannot be found.");
+            }
+        }
+
         cursorLocation = Input.mousePosition;
         mouseTracker.position = cursorLocation;
         // cursorLocation = Camera.main.ScreenToWorldPoint(cursorLocation);
@@ -80,11 +102,23 @@ public class ZachGameManager : MonoBehaviour
         {
             Time.timeScale = 0.0f; // This stops the flow of time in game completely allowing the game to pause. Also allows other scripts to detect if the game is paused. Sounds can still play so more code may have to be written to deal with sound when the game is paused. On a plus side, in my last project pausing the game did not stop my weapon changing code from working so switching tools is very possible even with the time scale at zero. - Zachary Simon
             pauseUI.SetActive(true);
+
+            if (!pauseUpdated)
+            {
+                SendPauseUpdates();
+                pauseUpdated = true;
+            }
         }
         else
         {
             Time.timeScale = 1.0f; // In case we ever add any slow motion effects to the game, this code may need to be adjusted to allow alternate timescales other than 1.0 while the game is unpaused. - Zachary Simon
             pauseUI.SetActive(false);
+
+            if (pauseUpdated)
+            {
+                SendPauseUpdates();
+                pauseUpdated = false;
+            }
         }
 
         if (Input.GetButtonDown("Cancel"))
@@ -92,7 +126,7 @@ public class ZachGameManager : MonoBehaviour
             SetPause();
         }
 
-        if (Input.GetKeyDown(KeyCode.Delete) && testBuild)
+        if (Input.GetKeyDown(KeyCode.Delete) && debugMode)
         {
             LossCondition();
         }
@@ -104,8 +138,7 @@ public class ZachGameManager : MonoBehaviour
                 paused = false;
             }
 
-            blackBackground.SetActive(true);
-            gameOverText.gameObject.SetActive(true);
+            gameOverElements.SetActive(true);
 
             if (expandBlackBackground)
             {
@@ -158,8 +191,7 @@ public class ZachGameManager : MonoBehaviour
         }
         else
         {
-            blackBackground.SetActive(false);
-            gameOverText.gameObject.SetActive(false);
+            gameOverElements.SetActive(false);
         }
     }
 
@@ -266,5 +298,16 @@ public class ZachGameManager : MonoBehaviour
     void UpdateGameOverImageAlpha()
     {
         gameOverImage.color = new Vector4(gameOverImage.color.r, gameOverImage.color.g, gameOverImage.color.b, gameOverImageAlpha);
+    }
+
+    public void UpdateDebugMode(bool update)
+    {
+        debugMode = update;
+    }
+
+    void SendPauseUpdates()
+    {
+        cameraController.UpdatePauseStatus(paused);
+        gameController.UpdatePauseStatus(paused);
     }
 }

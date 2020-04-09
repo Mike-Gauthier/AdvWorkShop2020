@@ -18,6 +18,8 @@ public class BaseBehavior : MonoBehaviour
     public TextMeshProUGUI baseMudNumber;
     public TextMeshProUGUI baseBricksNumber;
 
+    bool debugMode;
+
 
     private void Update()
     {
@@ -25,6 +27,29 @@ public class BaseBehavior : MonoBehaviour
         baseWoodNumber.SetText(baseWoodCount.ToString());
         baseStoneNumber.SetText(baseStoneCount.ToString());
         baseBricksNumber.SetText(baseBricksCount.ToString());
+
+        if (debugMode)
+        {
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                baseWoodCount += 1000;
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                baseStoneCount += 1000;
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                baseMudCount += 1000;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Semicolon))
+            {
+                baseBricksCount += 1000;
+            }
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -45,6 +70,11 @@ public class BaseBehavior : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //popUp.text = "";
+    }
+
+    public void UpdateDebugMode(bool update)
+    {
+        debugMode = update;
     }
 
 

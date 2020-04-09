@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Zachary/Scenes/UI Elements.unity
     guid: c67691015c17b9540a4a901691fcb9ac
+  - enabled: 1
+    path: Assets/Zachary/Scenes/UI with Gameplay.unity
+    guid: 89bf3d7d8c3ce3448a4ad7b73b632fa4
   m_configObjects: {}

@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     public GameObject animatedModel;
 
+    bool debugMode;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -77,7 +79,28 @@ public class PlayerController : MonoBehaviour
         stoneNumber.SetText(stoneCount.ToString());
         bricksNumber.SetText(bricksCount.ToString());
 
+        if (debugMode)
+        {
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                woodCount += 1000;
+            }
 
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                stoneCount += 1000;
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                mudCount += 1000;
+            }
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                bricksCount += 1000;
+            }
+        }
 
     }
 
@@ -123,6 +146,11 @@ public class PlayerController : MonoBehaviour
         swingHitbox.SetActive(false);
         yield return new WaitForSeconds(.5f); // cooldown between swings
         swingOnCD = false;
+    }
+
+    public void UpdateDebugMode(bool update)
+    {
+        debugMode = update;
     }
 }
 

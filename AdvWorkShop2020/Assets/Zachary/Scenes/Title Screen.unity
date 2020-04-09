@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSceneNumber: 0
-  sceneNumberOfFirstGameLevel: 2
+  sceneNumberOfFirstGameLevel: 3
   pages: []
   currentPage: 0
   isInstructionScene: 0

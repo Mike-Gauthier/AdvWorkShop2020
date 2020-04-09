@@ -13,9 +13,19 @@ public class GameController : MonoBehaviour
     public GameObject holder;
     public BaseBehavior bScript;
 
+    public bool debugMode; // Determines a debug mode. If active, allows for easily manipulating game states such as quickly gathering enough resources to test tower building or instantly activating win/loss conditions while saving time. - Zachary Simon
+    bool updatedDebug; // Checks if player script is informed of debug status - ZS
+    public GameObject debugTextHoldingObject; // Game Object with Debug text and shadow text as children - ZS
+
+    public ZachGameManager zachGameManager;
+
+    bool paused;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        zachGameManager = GetComponent<ZachGameManager>();
     }
 
 
@@ -27,6 +37,36 @@ public class GameController : MonoBehaviour
             currentMove();
             currentRotate();
             ReleaseIfClicked();
+        }
+
+        if (debugMode)
+        {
+            debugTextHoldingObject.SetActive(true);
+
+            if (!updatedDebug)
+            {
+                SendDebugUpdates();
+                updatedDebug = true;
+            }
+        }
+        else
+        {
+            debugTextHoldingObject.SetActive(false);
+
+            if (updatedDebug)
+            {
+                SendDebugUpdates();
+                updatedDebug = false;
+            }
+        }
+
+        if (paused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
@@ -148,6 +188,18 @@ public class GameController : MonoBehaviour
     private bool PressedKeyOfCurrentPrefab(int i) //refund materials here
     {
         return currentPrefabIndex == i && currentPlaceable != null;
+    }
+
+    void SendDebugUpdates()
+    {
+        zachGameManager.UpdateDebugMode(debugMode);
+        pScript.UpdateDebugMode(debugMode);
+        bScript.UpdateDebugMode(debugMode);
+    }
+
+    public void UpdatePauseStatus(bool update)
+    {
+        paused = update;
     }
 }
 
