@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
 public class PlayerController : MonoBehaviour
 {
     public float speed;
@@ -27,6 +28,9 @@ public class PlayerController : MonoBehaviour
     public GameObject animatedModel;
 
     bool debugMode;
+
+    public GameObject bridgePopUp;
+    public GameObject currentBridge;
 
     private void Start()
     {
@@ -81,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
         if (debugMode)
         {
-            if (Input.GetKeyDown(KeyCode.U))
+            if (Input.GetKeyDown(KeyCode.U)) // So I don't have to spend time gathering resources whenever testing. - Zachary Simon
             {
                 woodCount += 1000;
             }
@@ -102,6 +106,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (currentBridge == null)
+        {
+            bridgePopUp.SetActive(false);
+        }
+        else
+        {
+            bridgePopUp.SetActive(true);
+
+            if (currentBridge.tag != "bridge") // The idea here is that since the current hitbox of the build bridge area is tagged "bridge", the player script stores a Game Object variable called Current Bridge. Once a bridge is actually built, the tag should be changed to something else. Once that happens the script will no longer store the current bridge variable and the bridge pop up should disappear. - ZS
+            {
+                currentBridge = null;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -134,6 +151,21 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             other.GetComponent<EnemyCampScript>().health--;
+        }
+        if (other.gameObject.tag == "bridge")
+        {
+            currentBridge = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "bridge")
+        {
+            if (currentBridge != null)
+            {
+                currentBridge = null;
+            }
         }
     }
 

@@ -33,6 +33,8 @@ public class ZachGameManager : MonoBehaviour
     public GameObject gameOverButtons;
 
     public GameObject pauseUI;
+    public ButtonText[] pauseButtonTextScripts;
+    
 
     public Transform mouseTracker;
 
@@ -105,6 +107,10 @@ public class ZachGameManager : MonoBehaviour
 
             if (!pauseUpdated)
             {
+                foreach (ButtonText items in pauseButtonTextScripts)
+                {
+                    items.RebootButtonText();
+                }
                 SendPauseUpdates();
                 pauseUpdated = true;
             }
@@ -124,6 +130,7 @@ public class ZachGameManager : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             SetPause();
+
         }
 
         if (Input.GetKeyDown(KeyCode.Delete) && debugMode)
