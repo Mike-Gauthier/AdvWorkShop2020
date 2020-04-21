@@ -20,6 +20,10 @@ public class BaseBehavior : MonoBehaviour
 
     bool debugMode;
 
+    public TowerUI[] woodUIScripts;
+    public TowerUI[] stoneUIScripts;
+    public TowerUI[] mudUIScripts;
+    public TowerUI[] brickUIScripts;
 
     private void Update()
     {
@@ -27,6 +31,38 @@ public class BaseBehavior : MonoBehaviour
         baseWoodNumber.SetText(baseWoodCount.ToString());
         baseStoneNumber.SetText(baseStoneCount.ToString());
         baseBricksNumber.SetText(baseBricksCount.ToString());
+
+        if (woodUIScripts.Length > 0)
+        {
+            foreach (TowerUI scripts in woodUIScripts)
+            {
+                scripts.UpdateWoodCount(baseWoodCount);
+            }
+        }
+
+        if (stoneUIScripts.Length > 0)
+        {
+            foreach (TowerUI scripts in stoneUIScripts)
+            {
+                scripts.UpdateStoneCount(baseStoneCount);
+            }
+        }
+
+        if (mudUIScripts.Length > 0)
+        {
+            foreach (TowerUI scripts in mudUIScripts)
+            {
+                scripts.UpdateMudCount(baseMudCount);
+            }
+        }
+
+        if (brickUIScripts.Length > 0)
+        {
+            foreach (TowerUI scripts in brickUIScripts)
+            {
+                scripts.UpdateBrickCount(baseBricksCount);
+            }
+        }
 
         if (debugMode)
         {
@@ -76,6 +112,5 @@ public class BaseBehavior : MonoBehaviour
     {
         debugMode = update;
     }
-
 
 }
