@@ -41817,7 +41817,6 @@ MonoBehaviour:
   bScript: {fileID: 643113564}
   debugMode: 1
   debugTextHoldingObject: {fileID: 942415305}
-  zachGameManager: {fileID: 0}
   mudTowerUI: {fileID: 1825554110}
 --- !u!4 &1800088152
 Transform:

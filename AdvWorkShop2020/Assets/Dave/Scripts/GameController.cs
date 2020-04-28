@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     bool updatedDebug; // Checks if player script is informed of debug status - ZS
     public GameObject debugTextHoldingObject; // Game Object with Debug text and shadow text as children - ZS
 
-    public ZachGameManager zachGameManager;
+    ZachGameManager zachGameManager;
 
     bool paused;
 
