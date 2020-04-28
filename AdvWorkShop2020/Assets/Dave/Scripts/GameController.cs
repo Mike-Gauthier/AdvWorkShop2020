@@ -13,9 +13,24 @@ public class GameController : MonoBehaviour
     public GameObject holder;
     public BaseBehavior bScript;
 
+    public bool debugMode; // Determines a debug mode. If active, allows for easily manipulating game states such as quickly gathering enough resources to test tower building or instantly activating win/loss conditions while saving time. - Zachary Simon
+    bool updatedDebug; // Checks if player script is informed of debug status - ZS
+    public GameObject debugTextHoldingObject; // Game Object with Debug text and shadow text as children - ZS
+
+    ZachGameManager zachGameManager;
+
+    bool paused;
+
+    bool mudPlaceableActive; // A boolean that measures if the mud tower placable is active. - ZS
+    bool stonePlaceableActive;
+    bool woodPlaceableActive;
+    public GameObject mudTowerUI;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        zachGameManager = GetComponent<ZachGameManager>();
     }
 
 
@@ -27,6 +42,48 @@ public class GameController : MonoBehaviour
             currentMove();
             currentRotate();
             ReleaseIfClicked();
+        }
+
+        if (debugMode)
+        {
+            debugTextHoldingObject.SetActive(true);
+
+            if (!updatedDebug)
+            {
+                SendDebugUpdates();
+                updatedDebug = true;
+            }
+        }
+        else
+        {
+            debugTextHoldingObject.SetActive(false);
+
+            if (updatedDebug)
+            {
+                SendDebugUpdates();
+                updatedDebug = false;
+            }
+        }
+
+        if (paused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            if(Cursor.lockState != CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
+
+        if (mudPlaceableActive)
+        {
+            mudTowerUI.SetActive(true);
+        }
+        else
+        {
+            mudTowerUI.SetActive(false);
         }
     }
 
@@ -51,6 +108,10 @@ public class GameController : MonoBehaviour
             }
 
             currentPlaceable = null;
+            if (mudPlaceableActive)
+            {
+                mudPlaceableActive = false;
+            }
         }
     }
 
@@ -105,6 +166,7 @@ public class GameController : MonoBehaviour
                 {
                     if (currentPlaceable != null)
                     {
+                        DeactivateTowerBooleans();
                         Destroy(currentPlaceable);
                     }
 
@@ -127,6 +189,7 @@ public class GameController : MonoBehaviour
                     }
                     if (i == 2 && bScript.baseWoodCount >= 20 && bScript.baseStoneCount >= 20 && bScript.baseMudCount >= 20)
                     {
+                        mudPlaceableActive = true;
                         currentPlaceable = Instantiate(placeablePrefabs[i]);
                         currentPlaceable.transform.parent = holder.transform; //parenting
                         currentPrefabIndex = i;
@@ -134,6 +197,17 @@ public class GameController : MonoBehaviour
                         //pScript.stoneCount = pScript.stoneCount - 500;
                         //pScript.mudCount = pScript.mudCount - 500;
                         Debug.Log("Mud tower placed. Counts -200");
+                    }
+                    if (i == 2 && bScript.baseWoodCount < 20 || bScript.baseStoneCount < 20 || bScript.baseMudCount < 20) // Instantiates a translucent red tower that indicates the tower is not placeable. - ZS
+                    {
+                        mudPlaceableActive = true;
+                        currentPlaceable = Instantiate(placeablePrefabs[i + 1]);
+                        currentPlaceable.transform.parent = holder.transform; //parenting
+                        currentPrefabIndex = i;
+                        //pScript.woodCount = pScript.woodCount - 500;
+                        //pScript.stoneCount = pScript.stoneCount - 500;
+                        //pScript.mudCount = pScript.mudCount - 500;
+                        Debug.Log("Insufficient Resources for Mud Tower.");
                     }
                     else
                     {
@@ -147,7 +221,39 @@ public class GameController : MonoBehaviour
     }
     private bool PressedKeyOfCurrentPrefab(int i) //refund materials here
     {
+        if (mudPlaceableActive)
+        {
+            mudPlaceableActive = false;
+        }
         return currentPrefabIndex == i && currentPlaceable != null;
+    }
+
+    void SendDebugUpdates()
+    {
+        zachGameManager.UpdateDebugMode(debugMode);
+        pScript.UpdateDebugMode(debugMode);
+        bScript.UpdateDebugMode(debugMode);
+    }
+
+    public void UpdatePauseStatus(bool update)
+    {
+        paused = update;
+    }
+
+    void DeactivateTowerBooleans()
+    {
+        if (mudPlaceableActive)
+        {
+            mudPlaceableActive = false;
+        }
+        if (stonePlaceableActive)
+        {
+            stonePlaceableActive = false;
+        }
+        if (woodPlaceableActive)
+        {
+            woodPlaceableActive = false;
+        }
     }
 }
 

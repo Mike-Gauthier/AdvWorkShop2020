@@ -4,27 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< HEAD
-  - strike
+  - Cursor Tracker
+  - Enemy
+  - bridge
   - wood
   - stone
-  - Seeker
-  - Target
+  - strike
   - mud
   - brick
-  - oven
   - chest
-  - bridge
-  - death
-  - Enemy
-=======
-  - Cursor Tracker
-  - Canvas
-  - Window Destination
-  - Tower Type 1
-  - Tower Type 2
-  - Tower Type 3
->>>>>>> Zachary's-Branch
+  - oven
+  - no mud
   layers:
   - Default
   - TransparentFX
@@ -61,4 +51,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 3668577485
     locked: 0

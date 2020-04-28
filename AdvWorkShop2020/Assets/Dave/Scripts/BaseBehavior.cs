@@ -18,6 +18,12 @@ public class BaseBehavior : MonoBehaviour
     public TextMeshProUGUI baseMudNumber;
     public TextMeshProUGUI baseBricksNumber;
 
+    bool debugMode;
+
+    public TowerUI[] woodUIScripts;
+    public TowerUI[] stoneUIScripts;
+    public TowerUI[] mudUIScripts;
+    public TowerUI[] brickUIScripts;
 
     private void Update()
     {
@@ -25,6 +31,61 @@ public class BaseBehavior : MonoBehaviour
         baseWoodNumber.SetText(baseWoodCount.ToString());
         baseStoneNumber.SetText(baseStoneCount.ToString());
         baseBricksNumber.SetText(baseBricksCount.ToString());
+
+        if (woodUIScripts.Length > 0)
+        {
+            foreach (TowerUI scripts in woodUIScripts)
+            {
+                scripts.UpdateWoodCount(baseWoodCount);
+            }
+        }
+
+        if (stoneUIScripts.Length > 0)
+        {
+            foreach (TowerUI scripts in stoneUIScripts)
+            {
+                scripts.UpdateStoneCount(baseStoneCount);
+            }
+        }
+
+        if (mudUIScripts.Length > 0)
+        {
+            foreach (TowerUI scripts in mudUIScripts)
+            {
+                scripts.UpdateMudCount(baseMudCount);
+            }
+        }
+
+        if (brickUIScripts.Length > 0)
+        {
+            foreach (TowerUI scripts in brickUIScripts)
+            {
+                scripts.UpdateBrickCount(baseBricksCount);
+            }
+        }
+
+        if (debugMode)
+        {
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                baseWoodCount += 1000;
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                baseStoneCount += 1000;
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                baseMudCount += 1000;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Semicolon))
+            {
+                baseBricksCount += 1000;
+            }
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -47,5 +108,9 @@ public class BaseBehavior : MonoBehaviour
         //popUp.text = "";
     }
 
+    public void UpdateDebugMode(bool update)
+    {
+        debugMode = update;
+    }
 
 }

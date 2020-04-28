@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
 public class PlayerController : MonoBehaviour
 {
     public float speed;
@@ -25,6 +26,11 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
     public GameObject animatedModel;
+
+    bool debugMode;
+
+    public GameObject bridgePopUp;
+    public GameObject currentBridge;
 
     private void Start()
     {
@@ -77,8 +83,42 @@ public class PlayerController : MonoBehaviour
         stoneNumber.SetText(stoneCount.ToString());
         bricksNumber.SetText(bricksCount.ToString());
 
+        if (debugMode)
+        {
+            if (Input.GetKeyDown(KeyCode.U)) // So I don't have to spend time gathering resources whenever testing. - Zachary Simon
+            {
+                woodCount += 1000;
+            }
 
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                stoneCount += 1000;
+            }
 
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                mudCount += 1000;
+            }
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                bricksCount += 1000;
+            }
+        }
+
+        if (currentBridge == null)
+        {
+            bridgePopUp.SetActive(false);
+        }
+        else
+        {
+            bridgePopUp.SetActive(true);
+
+            if (currentBridge.tag != "bridge") // The idea here is that since the current hitbox of the build bridge area is tagged "bridge", the player script stores a Game Object variable called Current Bridge. Once a bridge is actually built, the tag should be changed to something else. Once that happens the script will no longer store the current bridge variable and the bridge pop up should disappear. - ZS
+            {
+                currentBridge = null;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -112,6 +152,21 @@ public class PlayerController : MonoBehaviour
         {
             other.GetComponent<EnemyCampScript>().health--;
         }
+        if (other.gameObject.tag == "bridge")
+        {
+            currentBridge = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "bridge")
+        {
+            if (currentBridge != null)
+            {
+                currentBridge = null;
+            }
+        }
     }
 
     IEnumerator ClickSwing()
@@ -123,6 +178,11 @@ public class PlayerController : MonoBehaviour
         swingHitbox.SetActive(false);
         yield return new WaitForSeconds(.5f); // cooldown between swings
         swingOnCD = false;
+    }
+
+    public void UpdateDebugMode(bool update)
+    {
+        debugMode = update;
     }
 }
 
